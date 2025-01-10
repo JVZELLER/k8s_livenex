@@ -1,6 +1,14 @@
 name: Code Quality
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+    paths:
+      - "**.exs"
+      - "**.ex"
+      - "mix.lock"
+      - ".tool-versions"
+      - ".github/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
