@@ -1,9 +1,9 @@
-defmodule K8sLivenex.MixProject do
+defmodule KubeProbex.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :k8s_livenex,
+      app: :kube_probex,
       version: "0.1.0",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,

@@ -1,7 +1,7 @@
 if {:module, Plug} == Code.ensure_compiled(Plug) do
-  defmodule K8sLivenex do
+  defmodule KubeProbex.Plug.Liveness do
     @moduledoc """
-    Documentation for `K8sLivenex`.
+    Documentation for `KubeProbex`.
     """
 
     @behaviour Plug

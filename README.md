@@ -1,21 +1,21 @@
-# K8S Livenex
+# Kube Probex
 
-`k8s_livenex` is a lightweight and flexible Elixir library designed to help define liveness probes in Kubernetes for applications built using the Phoenix framework. It leverages Phoenix Plug to integrate seamlessly into your web application, making it easy to ensure that your services remain healthy and responsive in Kubernetes environments.
+`kube_probex` is a lightweight and flexible Elixir library designed to help define HTTP probes in Kubernetes for applications built using the Phoenix framework. It leverages Phoenix Plug to integrate seamlessly into your web application, making it easy to ensure that your services remain healthy and responsive in Kubernetes environments.
 
 ## Features
-- **Simple Integration**: Add liveness probes to your Phoenix app with minimal configuration.
-- **Customizable Checks**: Define your own liveness logic to suit your application's needs.
-- **Kubernetes-Ready**: Built with Kubernetes liveness probe endpoints in mind.
+- **Simple Integration**: Add liveness, readiness, and startup probes to your Phoenix app with minimal configuration.
+- **Customizable Checks**: Define your own liveness, readiness, and startup probes logic to suit your application's needs.
+- **Kubernetes-Ready**: Built with Kubernetes probe endpoints in mind.
 - **Lightweight**: Minimal dependencies and easy to use.
 
 ## Installation
 
-Add `k8s_livenex` to your dependencies in `mix.exs`:
+Add `kube_probex` to your dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:k8s_livenex, "~> 0.1.0"}
+    {:kube_probex, "~> 0.1.0"}
   ]
 end
 ```
@@ -30,36 +30,27 @@ mix deps.get
 
 ### Adding the Plug to Your Phoenix Router
 
-To use `k8s_livenex`, add it to your Phoenix router as a plug:
+To use `kube_probex`, add it to your Phoenix router as a plug:
 
 ```elixir
-# lib/my_app_web/router.ex
+# lib/my_app_web/endpoint.ex
 
 defmodule MyAppWeb.Router do
-  use MyAppWeb, :router
+  use Phoenix.Endpoint, otp_app: :my_app_web
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  scope "/health" do
-    pipe_through :api
-
-    # Add the liveness route
-    forward "/liveness", K8sLivenex.Plug
-  end
+  plug KubeProbex.Plug.Liveness, path: ~w(/_health /_healthz)
 end
 ```
 
-This will expose a liveness probe endpoint at `/health/liveness`.
+This will expose a liveness probe endpoint at `/_health` and `/_healthz` paths.
 
-### Customizing Liveness Checks
+### Customizing Probe Checks
 
-You can define custom liveness checks by configuring `k8s_livenex`. Add a module implementing the `K8sLivenex.Check` behaviour:
+You can define custom probe checks by configuring `kube_probex`. Add a module implementing the `KubeProbex.Check` behaviour:
 
 ```elixir
 defmodule MyApp.LivenessCheck do
-  @behaviour K8sLivenex.Check
+  @behaviour KubeProbex.Check
 
   @impl true
   def check do
@@ -78,10 +69,10 @@ defmodule MyApp.LivenessCheck do
 end
 ```
 
-Then, configure `k8s_livenex` to use your custom check in `config/config.exs`:
+Then, configure `kube_probex` to use your custom check in `config/config.exs`:
 
 ```elixir
-config :k8s_livenex,
+config :kube_probex,
   liveness_check: MyApp.LivenessCheck
 ```
 
@@ -92,13 +83,14 @@ In your Kubernetes deployment manifest, configure the liveness probe to point to
 ```yaml
 livenessProbe:
   httpGet:
-    path: /health/liveness
+    path: /_health
     port: 4000
   initialDelaySeconds: 5
   periodSeconds: 10
 ```
 
 ## Contributing
+
 Contributions are welcome! Feel free to open an issue or submit a pull request with improvements or bug fixes.
 
 ### Running Tests
@@ -111,8 +103,8 @@ mix test
 
 ## License
 
-`k8s_livenex` is released under the [MIT License](LICENSE).
+`kube_probex` is released under the [MIT License](LICENSE).
 
 ---
 
-Start defining your Kubernetes liveness probes easily and effectively with `k8s_livenex`!
+Start defining your Kubernetes liveness probes easily and effectively with `kube_probex`!

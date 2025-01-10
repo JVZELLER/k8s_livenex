@@ -1,23 +1,25 @@
-defmodule K8sLivenexTest do
+defmodule KubeProbex.Plug.LivenessTest do
   use ExUnit.Case
   use Plug.Test
+
+  alias KubeProbex.Plug.Liveness
 
   @default_path "/healthz"
 
   describe "init/1" do
     test "returns the given opts" do
       opts = expected = [hello: :workd]
-      assert K8sLivenex.init(opts) == expected
+      assert Liveness.init(opts) == expected
     end
   end
 
   describe "call/2" do
-    @opts K8sLivenex.init([])
+    @opts Liveness.init([])
     test "it returns 200 to liveness path using default path" do
       :get
       |> conn(@default_path)
       |> put_req_header("accept", "application/json")
-      |> K8sLivenex.call(@opts)
+      |> Liveness.call(@opts)
       |> assert_status()
       |> assert_response()
     end
@@ -27,19 +29,19 @@ defmodule K8sLivenexTest do
         :get
         |> conn("/api/v1/users")
         |> put_req_header("accept", "application/json")
-        |> K8sLivenex.call(@opts)
+        |> Liveness.call(@opts)
 
       refute conn.resp_body
       refute conn.status
     end
 
-    @opts K8sLivenex.init(path: ["/_health", "/_test"])
+    @opts Liveness.init(path: ["/_health", "/_test"])
     test "it accepts a list of path on options" do
       for path <- @opts[:path] do
         :get
         |> conn(path)
         |> put_req_header("accept", "application/json")
-        |> K8sLivenex.call(@opts)
+        |> Liveness.call(@opts)
         |> assert_status()
         |> assert_response()
       end
