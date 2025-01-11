@@ -50,15 +50,20 @@ You can define custom probe checks by configuring `kube_probex`. Add a module im
 
 ```elixir
 defmodule MyApp.LivenessCheck do
-  @behaviour KubeProbex.Check
+  @behaviour KubeProbex.Check.Liveness
+
+  alias Plug.Conn
 
   @impl true
-  def check do
-    # Return `:ok` if healthy, `{:error, reason}` otherwise
+  def check(conn, _liveness_plug_opts) do
     if some_condition() do
-      :ok
+      conn
+      |> Conn.put_resp_content_type("application/json")
+      |> Conn.send_resp(200, ~s({"status": "ok"}))
     else
-      {:error, "Some condition failed"}
+      conn
+      |> Conn.put_resp_content_type("application/json")
+      |> Conn.send_resp(500, ~s({"status": "error"}))
     end
   end
 
