@@ -39,7 +39,7 @@ defmodule MyAppWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :my_app_web
 
   plug KubeProbex.Plug.Liveness, path: ~w(/_health /_healthz)
-  plug KubeProbex.Plug.Readiness, path: ~w(/_ready /_readyz), otp_apps: [:my_app_web]
+  plug KubeProbex.Plug.Readiness, path: ~w(/_ready /_readyz), otp_apps: [:my_app]
 end
 ```
 
