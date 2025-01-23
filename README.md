@@ -28,21 +28,24 @@ mix deps.get
 
 ## Usage
 
-### Adding the Plug to Your Phoenix Router
+### Adding the Plug to Your Phoenix Endpoint or Router
 
-To use `kube_probex`, add it to your Phoenix router as a plug:
+To use `kube_probex`, add it to your Phoenix endpoint or router as a plug:
 
 ```elixir
 # lib/my_app_web/endpoint.ex
 
-defmodule MyAppWeb.Router do
+defmodule MyAppWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :my_app_web
 
   plug KubeProbex.Plug.Liveness, path: ~w(/_health /_healthz)
+  plug KubeProbex.Plug.Readiness, path: ~w(/_ready /_readyz), otp_apps: [:my_app_web]
 end
 ```
 
-This will expose a liveness probe endpoint at `/_health` and `/_healthz` paths.
+This will expose:
+- A liveness probe endpoint at `/_health` and `/_healthz` paths.
+- A readiness probe endpoint at `/_ready` and `/_readyz` paths.
 
 ### Customizing Probe Checks
 

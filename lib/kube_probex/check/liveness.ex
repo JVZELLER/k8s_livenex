@@ -10,8 +10,9 @@ defmodule KubeProbex.Check.Liveness do
   By default, the `Heartbeat` module is used to handle liveness checks. However, you
   can override this behaviour by configuring a custom module in your application
   configuration under the `:kube_probex` key:
+
   ```elixir
-    config :kube_probex, :liveness_check, MyCustomLivenessCheck
+  config :kube_probex, :liveness_check, MyCustomLivenessCheck
   ```
   """
 
