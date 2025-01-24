@@ -5,7 +5,9 @@ defmodule KubeProbex.Plug.PathValidator do
   It provides functionality to check if an HTTP request matches the expected path
   for a Kubernetes probe (e.g., liveness, readiness).
 
-  > **Note**: This is an internal module and is not intended for direct use.
+  > #### **Note** {: .warning}
+  >
+  > This is an internal module and is not intended for direct use.
   """
 
   alias Plug.Conn
@@ -27,18 +29,20 @@ defmodule KubeProbex.Plug.PathValidator do
   ## Example
 
   Assuming the default path:
-
+  ```elixir
     iex> conn = %Plug.Conn{request_path: "/health/liveness"}
     iex> opts = []
     iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
     true
+  ```
 
   With a customized path:
-
+  ```elixir
     iex> conn = %Plug.Conn{request_path: "/custom/liveness"}
     iex> opts = [path: ["/custom/liveness"]]
     iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
     true
+  ```
   """
   @spec valid_path?(Conn.t(), keyword(), String.t()) :: boolean()
   def valid_path?(%Conn{request_path: request_path}, plug_opts, default_path) do

@@ -3,7 +3,7 @@ if {:module, Plug} == Code.ensure_compiled(Plug) do
     @moduledoc """
     A plug for handling Kubernetes HTTP liveness probe requests.
 
-    This module integrates with Phoenix or Plug applications to define a liveness probe
+    This module integrates with Phoenix applications to define a liveness probe
     endpoint. It validates the incoming request's path and executes the configured liveness
     check logic.
 

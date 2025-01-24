@@ -3,7 +3,7 @@ if {:module, Plug} == Code.ensure_compiled(Plug) do
     @moduledoc """
     A plug for handling Kubernetes HTTP readiness probe requests.
 
-    This module integrates with Phoenix or Plug applications to define a readiness probe
+    This module integrates with Phoenix applications to define a readiness probe
     endpoint. It validates the incoming request's path and executes the configured readiness
     check logic.
 

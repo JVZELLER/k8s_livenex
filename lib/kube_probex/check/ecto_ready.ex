@@ -1,7 +1,7 @@
 if {:module, Ecto.Migrator} == Code.ensure_compiled(Ecto.Migrator) do
   defmodule KubeProbex.Check.EctoReady do
     @moduledoc """
-    Provides the default implementation for Kubernetes readiness probes check using Ecto.
+    Provides the default implementation for `KubeProbex.Check.Readiness` behaviour using Ecto.
 
     This module defines a readiness probe handler that ensures database health by performing
     the following checks:
@@ -16,20 +16,15 @@ if {:module, Ecto.Migrator} == Code.ensure_compiled(Ecto.Migrator) do
 
     When all checks pass, the module returns an HTTP response with the following attributes:
 
-    - **Status**: `200 OK`
+    - **Status**: `200`
     - **Content-Type**: `application/json`
     - **Body**: `{"status": "ready"}`
 
     This indicates that the application is ready to serve traffic.
 
-    This module serves as the default adapter for the `KubeProbex.Check.Readiness` behaviour. It is
-    primarily used to ensure that Kubernetes readiness probes respond with a "ready" status only when
-    the application database is in a healthy state.
-
     ## Usage
 
-    This module is used internally by the `KubeProbex` library and should not be called directly.
-    Instead, ensure your application specifies the required `:ecto_repos` configuration.
+    Ensure your application specifies the required `:ecto_repos` configuration.
 
     ### Example
 
@@ -41,7 +36,7 @@ if {:module, Ecto.Migrator} == Code.ensure_compiled(Ecto.Migrator) do
 
     - `:otp_apps` - A list of OTP applications whose Ecto repositories should be checked. Each
       application must define its Ecto repositories under the `:ecto_repos` configuration key. This option
-      should be passed when setting the plug.
+      should be passed when setting the `KubeProbex.Plug.Readiness` plug.
 
     ### Exemple
 
@@ -49,9 +44,9 @@ if {:module, Ecto.Migrator} == Code.ensure_compiled(Ecto.Migrator) do
     defmodule MyAppWeb.Router do
       use Phoenix.Endpoint, otp_app: :my_app_web
 
-      plug KubeProbex.Plug.Readiness, path: ~w(/_ready /_readyz), otp_apps: [:my_app_web]
+      plug KubeProbex.Plug.Readiness, path: ~w(/_ready /_readyz), otp_apps: [:my_app]
     end
-    ````
+    ```
     """
 
     @behaviour KubeProbex.Check.Readiness

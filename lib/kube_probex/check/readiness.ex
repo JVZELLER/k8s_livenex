@@ -1,13 +1,13 @@
 defmodule KubeProbex.Check.Readiness do
   @moduledoc """
-  Defines the behaviour for implementing Kubernetes HTTP readiness checks.
+  Defines the behaviour for implementing HTTP readiness checks.
 
   This module specifies a contract for handling readiness probe requests in a Kubernetes environment.
   Readiness checks are used by Kubernetes to determine if the application is ready to serve traffic.
 
   ## Behaviour
 
-  To implement a custom readiness check, a module must define the `check/2` callback, which:
+  To implement a custom readiness check, a module must implement the `check/2` callback, which:
 
   - Processes the HTTP request represented by a `Plug.Conn`.
   - Determines and sets the appropriate HTTP response status, headers, and body.
@@ -56,8 +56,10 @@ defmodule KubeProbex.Check.Readiness do
   @doc """
   Executes the readiness check logic.
 
-  This function processes an HTTP request for a readiness probe. It takes a `Plug.Conn`
-  struct and a list of options. The implementation determines the response status,
+  This function retrives a custom adapter if its configured or uses the default one to
+  processes an HTTP request for a readiness probe. It takes a `Plug.Conn` struct and a list of options.
+
+  The implementation determines the response status,
   content type, and body.
 
   ## Parameters

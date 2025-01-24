@@ -1,11 +1,15 @@
 defmodule KubeProbex.Check.Heartbeat do
   @moduledoc """
-  The default implementation for the Kubernetes liveness probe check.
+  Provides the default implementation for `KubeProbex.Check.Liveness` behaviour.
 
-  This module provides a basic liveness probe handler that always responds with a status
-  of [`200`](https://http.cat/200) and a simple JSON payload: `{"status": "ok"}`.
+  This module provides a basic liveness probe handler that always returns a response with
+  the following attributes:
 
-  It serves as the default adapter for the `KubeProbex.Check.Liveness` behaviour.
+    - **Status**: [`200`](https://http.cat/200)
+    - **Content-Type**: `application/json`
+    - **Body**: `{"status": "ok"}`
+
+  This indicates that the application is up and running.
   """
 
   @behaviour KubeProbex.Check.Liveness
