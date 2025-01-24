@@ -3,12 +3,11 @@ defmodule KubeProbex.MixProject do
 
   @name "Kube Probex"
   @source_url "https://github.com/JVZELLER/kube_probex"
-  @version "1.0.0"
 
   def project do
     [
       app: :kube_probex,
-      version: @version,
+      version: version(),
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -64,11 +63,17 @@ defmodule KubeProbex.MixProject do
     ]
   end
 
+  defp version do
+    "VERSION"
+    |> File.read!()
+    |> String.trim()
+  end
+
   defp package do
     [
       maintainers: ["José Victor Zeller"],
       files: ~w(lib .formatter.exs mix.exs README* VERSION CHANGELOG*),
-      licenses: ["MIT License"],
+      licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
   end
@@ -77,7 +82,7 @@ defmodule KubeProbex.MixProject do
     [
       source_url: @source_url,
       main: "KubeProbex",
-      source_ref: "v#{@version}",
+      source_ref: "v#{version()}",
       groups_for_modules: [
         "Available Plugs": [
           KubeProbex.Plug.Liveness,
