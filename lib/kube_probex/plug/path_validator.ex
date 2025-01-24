@@ -30,18 +30,18 @@ defmodule KubeProbex.Plug.PathValidator do
 
   Assuming the default path:
   ```elixir
-    iex> conn = %Plug.Conn{request_path: "/health/liveness"}
-    iex> opts = []
-    iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
-    true
+  iex> conn = %Plug.Conn{request_path: "/health/liveness"}
+  iex> opts = []
+  iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
+  true
   ```
 
   With a customized path:
   ```elixir
-    iex> conn = %Plug.Conn{request_path: "/custom/liveness"}
-    iex> opts = [path: ["/custom/liveness"]]
-    iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
-    true
+  iex> conn = %Plug.Conn{request_path: "/custom/liveness"}
+  iex> opts = [path: ["/custom/liveness"]]
+  iex> KubeProbex.Plug.PathValidator.valid_path?(conn, opts, "/health/liveness")
+  true
   ```
   """
   @spec valid_path?(Conn.t(), keyword(), String.t()) :: boolean()
