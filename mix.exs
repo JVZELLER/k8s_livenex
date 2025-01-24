@@ -3,7 +3,7 @@ defmodule KubeProbex.MixProject do
 
   @name "Kube Probex"
   @source_url "https://github.com/JVZELLER/kube_probex"
-  @version "0.1.0"
+  @version "1.0.0"
 
   def project do
     [
