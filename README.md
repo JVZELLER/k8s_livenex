@@ -1,5 +1,8 @@
 # Kube Probex
 
+
+[![Build Status](https://github.com/jvzeller/kube_probex/actions/workflows/ci.yml/badge.svg)](https://github.com/jvzeller/kube_probex/actions) [![Hex.pm](https://img.shields.io/hexpm/v/kube_probex.svg)](https://hex.pm/packages/kube_probex) [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/kube_probex/)
+
 `kube_probex` is a lightweight and flexible Elixir library designed to help define HTTP probes in Kubernetes for applications built using the Phoenix framework. It leverages Phoenix Plug to integrate seamlessly into your web application, making it easy to ensure that your services remain healthy and responsive in Kubernetes environments.
 
 ## Features
